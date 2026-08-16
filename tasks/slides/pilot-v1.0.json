@@ -1,0 +1,34 @@
+{
+  "task_id": "PILOT-SLIDE-001",
+  "version": "1.0",
+  "task_family": "slides",
+  "upstream_card": {
+    "card_id": "VAC-SLIDE-001",
+    "repo": "draiagent/Visual-Agent-Design",
+    "ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "path": "examples/slide-deck-vac.md"
+  },
+  "goal": "依固定主題素材製作 10 頁、16:9、繁體中文的專業教學簡報，輸出 PPTX 與 PDF。",
+  "inputs": [
+    {"name": "topic_brief", "required": true, "media_type": "text/markdown", "source": "repo_fixture", "path": "fixtures/slides/topic-brief.md"},
+    {"name": "logo", "required": true, "media_type": "image/svg+xml", "source": "repo_fixture", "path": "fixtures/common/vad-benchmark-mark.svg"}
+  ],
+  "output_specification": {
+    "deliverables": ["PPTX deck", "PDF deck"],
+    "requirements": ["10 pages", "16:9", "Traditional Chinese", "one primary message per page", "clear opening, body and conclusion", "neutral professional visual style"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC01", "description": "PPTX 可正常開啟。", "severity": "critical", "required": true},
+    {"id": "AC02", "description": "PDF 可正常開啟。", "severity": "critical", "required": true},
+    {"id": "AC03", "description": "頁數為 10 頁且比例為 16:9。", "severity": "major", "required": true},
+    {"id": "AC04", "description": "內容涵蓋 fixture 中全部必要主題且沒有捏造數據或來源。", "severity": "critical", "required": true},
+    {"id": "AC05", "description": "每頁聚焦單一主要訊息並具清楚故事線。", "severity": "major", "required": true},
+    {"id": "AC06", "description": "文字清楚可讀，沒有大量文字堆疊。", "severity": "major", "required": true},
+    {"id": "AC07", "description": "Logo 未變形且整體版型一致。", "severity": "major", "required": true},
+    {"id": "AC08", "description": "使用繁體中文且無明顯錯字。", "severity": "major", "required": true}
+  ],
+  "allowed_tools": ["presentation-generator", "pptx-editor", "pdf-export", "charting", "image-processing", "llm"],
+  "time_limit_minutes": 25,
+  "reference_route": {"x": "known", "y": "continuous", "z": "fast", "recommended": "Workflow + VAC"},
+  "scoring_notes": ["不因模型缺少 PPTX 原生輸出而把 deliverable 降級為只有文字大綱。", "若平台只能產生等效可下載簡報格式，需標記 capability_mismatch / equivalent_output。"]
+}
