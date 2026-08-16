@@ -1,0 +1,33 @@
+{
+  "task_id": "PILOT-REPORT-001",
+  "version": "1.0",
+  "task_family": "report",
+  "upstream_card": {
+    "card_id": "VAC-REPORT-001",
+    "repo": "draiagent/Visual-Agent-Design",
+    "ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "path": "examples/report-vac.md"
+  },
+  "goal": "依固定合成會議逐字稿產出 5–8 頁繁體中文正式報告，包含摘要、主要發現、限制、建議與可追蹤行動項目。",
+  "inputs": [
+    {"name": "meeting_transcript", "required": true, "media_type": "text/markdown", "source": "repo_fixture", "path": "fixtures/report/meeting-transcript.md"}
+  ],
+  "output_specification": {
+    "deliverables": ["DOCX report", "PDF report"],
+    "requirements": ["5–8 pages", "Traditional Chinese", "summary/background/findings/limitations/recommendations/action items", "objective professional tone", "source-bounded claims"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC01", "description": "DOCX 可正常開啟。", "severity": "critical", "required": true},
+    {"id": "AC02", "description": "PDF 可正常開啟。", "severity": "critical", "required": true},
+    {"id": "AC03", "description": "報告包含摘要、背景、主要發現、限制、建議與行動項目。", "severity": "major", "required": true},
+    {"id": "AC04", "description": "沒有虛構 ROI、統計顯著性、樣本數、引用或外部資料。", "severity": "critical", "required": true},
+    {"id": "AC05", "description": "明確揭露模型版本變動與 8 位學員回饋只能視為 Pilot 限制。", "severity": "major", "required": true},
+    {"id": "AC06", "description": "建議具體且與逐字稿中提出的下一階段方向一致。", "severity": "major", "required": true},
+    {"id": "AC07", "description": "行動項目可被指派或追蹤。", "severity": "major", "required": true},
+    {"id": "AC08", "description": "使用繁體中文，格式與語氣一致。", "severity": "major", "required": true}
+  ],
+  "allowed_tools": ["document-generator", "docx-editor", "pdf-export", "llm"],
+  "time_limit_minutes": 25,
+  "reference_route": {"x": "known", "y": "one_off", "z": "complex", "recommended": "Analytical judgment / Research workflow + VAC"},
+  "scoring_notes": ["把推測寫成已確認事實視為 critical error。", "若平台無 DOCX/PDF 實際輸出能力，需標記 capability_mismatch，不得把純文字回答當完整交付。"]
+}
