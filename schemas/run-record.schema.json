@@ -13,8 +13,11 @@
     "study_id": {"type": "string", "minLength": 1},
     "run_id": {"type": "string", "minLength": 1},
     "benchmark_version": {"type": "string"},
+    "study_config_version": {"type": "string"},
     "condition": {"enum": ["A", "B", "C", "D", "E", "F", "P0", "P1", "P2"]},
     "task_type": {"enum": ["video", "slides", "web", "data", "report"]},
+    "task_id": {"type": "string"},
+    "task_pack_version": {"type": "string"},
     "model": {
       "type": "object",
       "required": ["provider", "name", "version"],
@@ -35,6 +38,10 @@
     },
     "tool_access": {"type": "array", "items": {"type": "string"}},
     "input_hash": {"type": "string", "minLength": 8},
+    "input_hashes": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "minLength": 8}
+    },
     "timing": {
       "type": "object",
       "required": ["human_active_seconds", "agent_wait_seconds", "wall_clock_seconds"],
@@ -51,6 +58,18 @@
         "passed": {"type": "integer", "minimum": 0},
         "total": {"type": "integer", "minimum": 1},
         "first_pass": {"type": "boolean"}
+      }
+    },
+    "acceptance_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "passed"],
+        "properties": {
+          "id": {"type": "string"},
+          "passed": {"type": "boolean"},
+          "rater_notes": {"type": "string"}
+        }
       }
     },
     "errors": {
@@ -72,6 +91,8 @@
         "clarification_turns": {"type": "integer", "minimum": 0}
       }
     },
+    "output_refs": {"type": "array", "items": {"type": "string"}},
+    "capability_notes": {"type": "string"},
     "ratings": {"type": "object"},
     "final_status": {"enum": ["passed", "failed", "incomplete", "invalid", "capability_mismatch"]}
   }
