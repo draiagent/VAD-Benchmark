@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/draiagent/VAD-Benchmark/blob/main/schemas/task-pack.schema.json",
+  "title": "VAD-Benchmark Task Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_id",
+    "version",
+    "task_family",
+    "upstream_card",
+    "goal",
+    "inputs",
+    "output_specification",
+    "acceptance_criteria",
+    "allowed_tools",
+    "time_limit_minutes",
+    "reference_route",
+    "scoring_notes"
+  ],
+  "properties": {
+    "task_id": {"type": "string", "pattern": "^PILOT-(VIDEO|SLIDE|WEB|DATA|REPORT)-[0-9]{3}$"},
+    "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "task_family": {"enum": ["video", "slides", "web", "data", "report"]},
+    "upstream_card": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["card_id", "repo", "ref", "path"],
+      "properties": {
+        "card_id": {"type": "string"},
+        "repo": {"const": "draiagent/Visual-Agent-Design"},
+        "ref": {"type": "string", "minLength": 7},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "goal": {"type": "string", "minLength": 10},
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "required", "media_type", "source"],
+        "properties": {
+          "name": {"type": "string", "minLength": 1},
+          "required": {"type": "boolean"},
+          "media_type": {"type": "string", "minLength": 1},
+          "source": {"enum": ["repo_fixture", "operator_fixed_asset", "optional"]},
+          "path": {"type": "string"},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "output_specification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deliverables", "requirements"],
+      "properties": {
+        "deliverables": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "requirements": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description", "severity", "required"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^AC[0-9]{2}$"},
+          "description": {"type": "string", "minLength": 5},
+          "severity": {"enum": ["critical", "major", "minor"]},
+          "required": {"type": "boolean"}
+        }
+      }
+    },
+    "allowed_tools": {"type": "array", "items": {"type": "string"}},
+    "time_limit_minutes": {"type": "integer", "minimum": 1},
+    "reference_route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "z", "recommended"],
+      "properties": {
+        "x": {"enum": ["known", "unknown"]},
+        "y": {"enum": ["one_off", "continuous"]},
+        "z": {"enum": ["fast", "complex"]},
+        "recommended": {"type": "string", "minLength": 1}
+      }
+    },
+    "scoring_notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
