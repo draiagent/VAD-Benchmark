@@ -9,7 +9,10 @@ from pathlib import Path
 from statistics import mean, median
 from typing import Any, Dict, Iterable, List, Tuple
 
-from scripts.score import compute_metrics
+try:
+    from scripts.score import compute_metrics
+except ModuleNotFoundError:  # direct execution: python scripts/aggregate.py
+    from score import compute_metrics
 
 NUMERIC_KEYS = [
     "completion_rate",
@@ -35,12 +38,11 @@ def load_records(folder: Path) -> Iterable[Dict[str, Any]]:
 
 
 def group_key(metrics: Dict[str, Any]) -> Tuple[str, str, str, str]:
-    model = metrics.get("model_fingerprint", "")
     return (
         metrics["condition"],
         metrics["task_type"],
         metrics.get("provider", ""),
-        model,
+        metrics.get("model_fingerprint", ""),
     )
 
 
