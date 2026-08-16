@@ -1,0 +1,65 @@
+{
+  "study_id": "five-pack-pilot-demo",
+  "run_id": "demo-PILOT-DATA-001-B-fixture-01",
+  "benchmark_version": "0.2.0",
+  "study_config_version": "0.2.0",
+  "condition": "B",
+  "task_type": "data",
+  "task_id": "PILOT-DATA-001",
+  "task_pack_version": "1.0",
+  "model": {
+    "provider": "fixture-provider",
+    "name": "fixture-model",
+    "version": "not-a-real-benchmark",
+    "platform": "ci-example"
+  },
+  "provenance": {
+    "vad_core_ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "promptless_ref": "304537ad22437050598a956bfab0ed24169452a4"
+  },
+  "tool_access": ["files", "python", "charting"],
+  "input_hash": "sha256:demo-aggregate-input-hash",
+  "input_hashes": {
+    "dataset": "sha256:demo-dataset-hash",
+    "data_dictionary": "sha256:demo-dictionary-hash"
+  },
+  "timing": {
+    "human_active_seconds": 90,
+    "agent_wait_seconds": 75,
+    "wall_clock_seconds": 195
+  },
+  "acceptance": {
+    "passed": 8,
+    "total": 8,
+    "first_pass": true
+  },
+  "acceptance_items": [
+    {"id": "AC01", "passed": true},
+    {"id": "AC02", "passed": true},
+    {"id": "AC03", "passed": true},
+    {"id": "AC04", "passed": true},
+    {"id": "AC05", "passed": true},
+    {"id": "AC06", "passed": true},
+    {"id": "AC07", "passed": true},
+    {"id": "AC08", "passed": true}
+  ],
+  "errors": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "interaction": {
+    "revision_count": 0,
+    "prompt_chars": 0,
+    "prompt_turns": 0,
+    "clarification_turns": 0
+  },
+  "output_refs": ["demo-only/no-real-output"],
+  "ratings": {
+    "tus_va_score": 30,
+    "hastu_score": 30,
+    "satisfaction_score": 5.0
+  },
+  "final_status": "passed",
+  "note": "結構示範資料，不代表任何真實模型或 VAD 方法的 benchmark 結果。"
+}
