@@ -1,0 +1,47 @@
+{
+  "study_id": "pilot-001",
+  "run_id": "pilot-001-data-B-run01",
+  "benchmark_version": "0.1.0",
+  "condition": "B",
+  "task_type": "data",
+  "model": {
+    "provider": "example-provider",
+    "name": "example-model",
+    "version": "record-the-real-version",
+    "platform": "example-platform"
+  },
+  "provenance": {
+    "vad_core_ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "promptless_ref": "not_applicable"
+  },
+  "tool_access": ["files", "python"],
+  "input_hash": "sha256:example-input-hash",
+  "timing": {
+    "human_active_seconds": 120,
+    "agent_wait_seconds": 80,
+    "wall_clock_seconds": 240
+  },
+  "acceptance": {
+    "passed": 8,
+    "total": 10,
+    "first_pass": false
+  },
+  "errors": {
+    "critical": 0,
+    "major": 1,
+    "minor": 2
+  },
+  "interaction": {
+    "revision_count": 1,
+    "prompt_chars": 42,
+    "prompt_turns": 1,
+    "clarification_turns": 0
+  },
+  "ratings": {
+    "tus_va_score": 26,
+    "hastu_score": 25,
+    "satisfaction_score": 4.2
+  },
+  "final_status": "failed",
+  "note": "示範資料，不代表任何真實模型的 benchmark 結果。"
+}
