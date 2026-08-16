@@ -1,0 +1,53 @@
+{
+  "study_config_version": "0.2.0",
+  "benchmark_version": "0.2.0",
+  "pilot_name": "Five-Pack Pilot Lab",
+  "upstreams": {
+    "vad_core_repo": "draiagent/Visual-Agent-Design",
+    "vad_core_ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "promptless_repo": "draiagent/VAD-Promptless",
+    "promptless_ref": "304537ad22437050598a956bfab0ed24169452a4"
+  },
+  "task_families": ["video", "slides", "web", "data", "report"],
+  "task_packs": [
+    "tasks/video/pilot-v1.0.json",
+    "tasks/slides/pilot-v1.0.json",
+    "tasks/web/pilot-v1.0.json",
+    "tasks/data/pilot-v1.0.json",
+    "tasks/report/pilot-v1.0.json"
+  ],
+  "vad_conditions": ["A", "B", "C", "D", "E", "F"],
+  "promptless_conditions": ["P0", "P1", "P2"],
+  "tracks": {
+    "vad": {"conditions": ["A", "B", "C", "D", "E", "F"], "default_replicates": 2},
+    "promptless": {"conditions": ["P0", "P1", "P2"], "default_replicates": 2}
+  },
+  "minimal_text_max_chars": 100,
+  "max_revisions": 3,
+  "primary_metrics": [
+    "completion_rate",
+    "first_pass_yield",
+    "revision_count",
+    "weighted_error",
+    "human_active_seconds"
+  ],
+  "secondary_metrics": [
+    "agent_wait_seconds",
+    "wall_clock_seconds",
+    "prompt_chars",
+    "prompt_turns",
+    "clarification_turns",
+    "routing_accuracy",
+    "tus_va_score",
+    "hastu_score",
+    "satisfaction_score"
+  ],
+  "pilot_readiness": {
+    "task_pack_schema_required": true,
+    "fixture_hashes_required_before_execution": true,
+    "capability_mismatch_must_be_recorded": true,
+    "blind_scoring_required": true
+  },
+  "raw_results_are_immutable": true,
+  "blind_scoring_required": true
+}
