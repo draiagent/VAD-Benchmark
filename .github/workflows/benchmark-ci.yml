@@ -24,8 +24,8 @@ jobs:
       - name: Validate v0.1 foundation compatibility
         run: python scripts/validate_study.py --config configs/study-v0.1.0.json --run examples/sample-run.json
 
-      - name: Validate v0.2 Pilot Lab config
-        run: python scripts/validate_study.py --config configs/study-v0.2.0.json
+      - name: Validate v0.2 Pilot Lab config and sample run
+        run: python scripts/validate_study.py --config configs/study-v0.2.0.json --run examples/sample-pilot-run.json
 
       - name: Validate Five-Pack task packs
         run: python scripts/validate_task_packs.py --config configs/study-v0.2.0.json
@@ -34,12 +34,12 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*.py' -v
 
       - name: Smoke-test scoring
-        run: python scripts/score.py examples/sample-run.json --out /tmp/scored.json
+        run: python scripts/score.py examples/sample-pilot-run.json --out /tmp/scored.json
 
       - name: Smoke-test aggregation
         run: |
           mkdir -p /tmp/vad-raw /tmp/vad-processed
-          cp examples/sample-run.json /tmp/vad-raw/run01.json
+          cp examples/sample-pilot-run.json /tmp/vad-raw/run01.json
           python scripts/aggregate.py /tmp/vad-raw --out /tmp/vad-processed/summary.json
           cat /tmp/vad-processed/summary.json
 
