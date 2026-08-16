@@ -1,0 +1,34 @@
+{
+  "task_id": "PILOT-DATA-001",
+  "version": "1.0",
+  "task_family": "data",
+  "upstream_card": {
+    "card_id": "VAC-DATA-001",
+    "repo": "draiagent/Visual-Agent-Design",
+    "ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "path": "examples/data-analysis-vac.md"
+  },
+  "goal": "分析固定合成銷售資料，產出可重算的清理資料、至少 3 張圖表、核心洞察與限制說明。",
+  "inputs": [
+    {"name": "dataset", "required": true, "media_type": "text/csv", "source": "repo_fixture", "path": "fixtures/data/pilot-sales.csv"},
+    {"name": "data_dictionary", "required": true, "media_type": "text/markdown", "source": "repo_fixture", "path": "fixtures/data/data-dictionary.md"}
+  ],
+  "output_specification": {
+    "deliverables": ["cleaned CSV or XLSX", "analysis report", "at least 3 charts"],
+    "requirements": ["record original and cleaned row counts", "reproducible calculations", "gross profit/margin and return rate use fixture definitions", "state data limitations", "do not infer real-world industry context"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC01", "description": "原始列數與清理後列數有明確紀錄。", "severity": "major", "required": true},
+    {"id": "AC02", "description": "主要計算可依原始資料與公式重算。", "severity": "critical", "required": true},
+    {"id": "AC03", "description": "gross_profit、gross_margin、return_rate 使用指定定義。", "severity": "critical", "required": true},
+    {"id": "AC04", "description": "至少產出 3 張具標題、軸或必要圖例的核心圖表。", "severity": "major", "required": true},
+    {"id": "AC05", "description": "North/South 與 Online/Partner 比較均有呈現。", "severity": "major", "required": true},
+    {"id": "AC06", "description": "結論只根據資料證據，沒有捏造外部背景或因果。", "severity": "critical", "required": true},
+    {"id": "AC07", "description": "資料限制有明確列出。", "severity": "major", "required": true},
+    {"id": "AC08", "description": "輸出檔案可正常開啟且沒有明顯公式或單位錯誤。", "severity": "critical", "required": true}
+  ],
+  "allowed_tools": ["python", "pandas-or-equivalent", "spreadsheet", "statistics", "charting", "llm"],
+  "time_limit_minutes": 20,
+  "reference_route": {"x": "known", "y": "continuous", "z": "fast", "recommended": "Workflow + VAC"},
+  "scoring_notes": ["若模型無法直接運算檔案而只提供方法說明，不視為完成。", "所有圖表與數值必須能回溯到同一 CSV fixture。"]
+}
