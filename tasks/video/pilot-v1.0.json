@@ -1,0 +1,36 @@
+{
+  "task_id": "PILOT-VIDEO-001",
+  "version": "1.0",
+  "task_family": "video",
+  "upstream_card": {
+    "card_id": "VAC-VIDEO-001",
+    "repo": "draiagent/Visual-Agent-Design",
+    "ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "path": "examples/video-editing-vac.md"
+  },
+  "goal": "將固定 3–5 分鐘原始影片製作成 45–60 秒、9:16、繁體中文字幕的可用短影音。",
+  "inputs": [
+    {"name": "source_video", "required": true, "media_type": "video/mp4", "source": "operator_fixed_asset", "path": "fixtures-local/video/source.mp4", "notes": "同一 study 所有 run 必須使用同一 SHA-256。"},
+    {"name": "transcript", "required": true, "media_type": "text/markdown", "source": "repo_fixture", "path": "fixtures/video/transcript.md"},
+    {"name": "logo", "required": true, "media_type": "image/svg+xml", "source": "repo_fixture", "path": "fixtures/common/vad-benchmark-mark.svg"}
+  ],
+  "output_specification": {
+    "deliverables": ["MP4 short video"],
+    "requirements": ["45–60 seconds", "9:16", "1080x1920", "Traditional Chinese burned-in subtitles", "voice-first audio", "logo not distorted"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC01", "description": "影片可完整解碼與播放。", "severity": "critical", "required": true},
+    {"id": "AC02", "description": "片長介於 45–60 秒。", "severity": "major", "required": true},
+    {"id": "AC03", "description": "輸出比例為 9:16 且目標解析度 1080x1920。", "severity": "major", "required": true},
+    {"id": "AC04", "description": "主要內容與來源逐字稿主旨一致，沒有捏造重要事實。", "severity": "critical", "required": true},
+    {"id": "AC05", "description": "繁體中文字幕與語音內容一致。", "severity": "major", "required": true},
+    {"id": "AC06", "description": "音畫同步且主要人聲清楚。", "severity": "critical", "required": true},
+    {"id": "AC07", "description": "Logo 正確且未拉伸變形。", "severity": "major", "required": true},
+    {"id": "AC08", "description": "無黑畫面、破損片段或明顯輸出錯誤。", "severity": "critical", "required": true},
+    {"id": "AC09", "description": "字幕無明顯繁體中文錯字。", "severity": "minor", "required": false}
+  ],
+  "allowed_tools": ["speech-to-text", "video-editor", "ffmpeg-or-equivalent", "image-processing", "multimodal-llm"],
+  "time_limit_minutes": 30,
+  "reference_route": {"x": "known", "y": "continuous", "z": "fast", "recommended": "Workflow + VAC"},
+  "scoring_notes": ["禁止因模型缺少影片輸出能力而替換成純腳本任務。", "平台無法處理影片時標記 capability_mismatch。", "所有 condition 使用相同 source_video hash。"]
+}
