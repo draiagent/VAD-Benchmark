@@ -2,7 +2,7 @@ name: VAD Benchmark CI
 
 on:
   push:
-    branches: [main, benchmark-foundation-v0.1.0]
+    branches: [main, pilot-lab-v0.2.0]
   pull_request:
     branches: [main]
 
@@ -21,8 +21,14 @@ jobs:
       - name: Install validator
         run: python -m pip install --upgrade pip jsonschema
 
-      - name: Validate canonical config and sample run
+      - name: Validate v0.1 foundation compatibility
         run: python scripts/validate_study.py --config configs/study-v0.1.0.json --run examples/sample-run.json
+
+      - name: Validate v0.2 Pilot Lab config
+        run: python scripts/validate_study.py --config configs/study-v0.2.0.json
+
+      - name: Validate Five-Pack task packs
+        run: python scripts/validate_task_packs.py --config configs/study-v0.2.0.json
 
       - name: Run unit tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
@@ -36,3 +42,21 @@ jobs:
           cp examples/sample-run.json /tmp/vad-raw/run01.json
           python scripts/aggregate.py /tmp/vad-raw --out /tmp/vad-processed/summary.json
           cat /tmp/vad-processed/summary.json
+
+      - name: Build VAD Pilot Matrix
+        run: |
+          python scripts/build_pilot_matrix.py \
+            --track vad \
+            --model fixture:model:1:ci \
+            --replicates 1 \
+            --out /tmp/vad-pilot-matrix.json
+          python -c "import json; p=json.load(open('/tmp/vad-pilot-matrix.json')); assert len(p)==30; print('VAD matrix rows:', len(p))"
+
+      - name: Build Promptless Pilot Matrix
+        run: |
+          python scripts/build_pilot_matrix.py \
+            --track promptless \
+            --model fixture:model:1:ci \
+            --replicates 1 \
+            --out /tmp/promptless-pilot-matrix.json
+          python -c "import json; p=json.load(open('/tmp/promptless-pilot-matrix.json')); assert len(p)==15; print('Promptless matrix rows:', len(p))"
