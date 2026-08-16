@@ -1,0 +1,34 @@
+{
+  "task_id": "PILOT-WEB-001",
+  "version": "1.0",
+  "task_family": "web",
+  "upstream_card": {
+    "card_id": "VAC-WEB-001",
+    "repo": "draiagent/Visual-Agent-Design",
+    "ref": "9781df292270ec9c2abbec911d3263f245974fa7",
+    "path": "examples/website-vac.md"
+  },
+  "goal": "依固定虛構專案素材建立可正常開啟的單頁式繁體中文響應網站，支援桌機與手機。",
+  "inputs": [
+    {"name": "project_brief", "required": true, "media_type": "text/markdown", "source": "repo_fixture", "path": "fixtures/web/project-brief.md"},
+    {"name": "logo", "required": false, "media_type": "image/svg+xml", "source": "repo_fixture", "path": "fixtures/common/vad-benchmark-mark.svg"}
+  ],
+  "output_specification": {
+    "deliverables": ["HTML/CSS/JavaScript website package"],
+    "requirements": ["single-page responsive site", "Traditional Chinese", "Hero/About/Services/How It Works/FAQ/Contact", "mobile-first", "CTA uses #contact without fabricated contact data"]
+  },
+  "acceptance_criteria": [
+    {"id": "AC01", "description": "網站可在本機或等效預覽環境正常開啟。", "severity": "critical", "required": true},
+    {"id": "AC02", "description": "桌機版與手機版沒有重大跑版。", "severity": "major", "required": true},
+    {"id": "AC03", "description": "主要導覽與內部連結有效。", "severity": "critical", "required": true},
+    {"id": "AC04", "description": "必要頁面區塊完整。", "severity": "major", "required": true},
+    {"id": "AC05", "description": "沒有虛構公司、客戶、email、電話或地址。", "severity": "critical", "required": true},
+    {"id": "AC06", "description": "沒有使用未授權外部素材。", "severity": "critical", "required": true},
+    {"id": "AC07", "description": "CTA 清楚且不誤導，使用指定 #contact 行為。", "severity": "major", "required": true},
+    {"id": "AC08", "description": "無重大 JavaScript / CSS 錯誤且繁體中文可讀。", "severity": "major", "required": true}
+  ],
+  "allowed_tools": ["html-css-js", "code-editor", "browser-preview", "image-processing", "llm"],
+  "time_limit_minutes": 25,
+  "reference_route": {"x": "known", "y": "continuous", "z": "fast", "recommended": "Workflow + VAC"},
+  "scoring_notes": ["不得因平台有網站託管功能而增加 fixture 未要求的內容。", "若不能交付可檢查程式碼或網站檔案，標記 capability_mismatch。"]
+}
